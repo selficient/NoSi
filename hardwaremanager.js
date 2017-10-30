@@ -40,5 +40,6 @@ function getState(req, res){
 
 module.exports = {
     updateState: updateState,
-    getState: getState
+    getState: getState,
+    updateState: updateState
 }
