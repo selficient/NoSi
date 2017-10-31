@@ -1,27 +1,30 @@
 //TODO: add description of file
 const database = require("./database.js");
-
-
+const template = require("./hardwaretemplate.json");
+//database.update("hardware", {name: "Lampje"}, template, ding => {console.log("Hoi")});
 function updateState(req, res){
     //TODO: Add security checks
     if(!req.body || !req.body.name || !req.body.interaction || !req.body.state){
         return res.send("No Data Found");
     }
+    console.log(req.body)
     //Zoek hardware in de database
     database.find("hardware", {name : req.body.name}, (result) => {
+        result = result[0]
+        //console.log(result[0]);
         if(result.length == 0){
             return res.send("No Data Found");
         }
-        result.interactions.find(item => {
-            if(!item[req.body.interaction]){
-                return res.send("No Interaction Found");
-            }
-            if(!item[req.body.interaction][req.body.state]){
-                return res.send("This state is not supported by interaction")
-            }
-            //TODO: Voeg update functionaliteit toe.
-            res.send(item[req.body.interaction][req.body.state]);
-        });
+        if(!result.interactions[req.body.interaction]){
+            return res.send("No Interaction Found");
+        }
+        if(!result.interactions[req.body.interaction][req.body.state]){
+            return res.send("This state is not supported by interaction");
+        }
+        //TODO: Voeg update functionaliteit toe.
+        result.state[req.body.interaction] = result.interactions[req.body.interaction][req.body.state];
+        database.update("hardware", {name: req.body.name}, result, x => res.send(x));
+        //res.send(item[req.body.interaction][req.body.state]);
         //res.send(result);
     });
 }

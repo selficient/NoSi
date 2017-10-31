@@ -35,15 +35,15 @@ function find(dbName, query, callback){
 }
 
 function update(dbName, query, newObj, callback){
-    connent(db=>{
+    connect(db=>{
         let collection = db.collection(dbName);
         collection.updateOne(query, newObj, (err, docs) => {
             if(!err){
-                res.send("Update success");
-                callback();
+                callback("success");
             }
         });
     });
 }
 module.exports.insert = insert;
 module.exports.find = find;
+module.exports.update = update;
