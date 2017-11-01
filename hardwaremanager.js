@@ -7,7 +7,6 @@ function updateState(req, res){
     if(!req.body || !req.body.name || !req.body.interaction || !req.body.state){
         return res.send("No Data Found");
     }
-    //TODO: Nieuwe Hardware template implementeren
     console.log(req.body)
     //Zoek hardware in de database
     database.find("hardware", {name : req.body.name}, (result) => {
@@ -16,18 +15,20 @@ function updateState(req, res){
         if(result.length == 0){
             return res.send("No Data Found");
         }
-        if(!result.interactions[req.body.interaction]){
-            return res.send("No Interaction Found");
-        }
-        if(!result.interactions[req.body.interaction][req.body.state]){
-            return res.send("This state is not supported by interaction");
-        }
-        //TODO: Implementeer actionlog update.
-        result.state[req.body.interaction] = result.interactions[req.body.interaction][req.body.state];
+        let interaction = result.interactions.find(x => x.name === req.body.interaction);
+        if(!interaction) return res.send("No Interaction Found");
+        let action = interaction.actions.find(x => x.description === req.body.state);
+        if(!action) return res.send("No action found");
+        let date = new Date();
+        database.insert("actionlog", {
+            hardwareID: result.id,
+            date: date.toLocaleString(),
+            interaction: interaction.name,
+            action: action.description,
+            state: action.code
+        }, x => console.log("inserted"))
+        result.state.find(x => x.name === req.body.interaction).state = action.code;
         database.update("hardware", {name: req.body.name}, result, x => res.send(x));
-
-        //res.send(item[req.body.interaction][req.body.state]);
-        //res.send(result);
     });
 }
 function getState(req, res){
