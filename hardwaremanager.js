@@ -43,9 +43,23 @@ function getState(req, res){
         res.send(result);
     });
 }
+function getAllHardware(req, res){
+    //TODO: Implementeer security checks
+    database.find("hardware", {}, result => {
+        res.send(result);
+    });
+}
+function getActionLog(req, res){
+    //TODO: Implementeer security checks
+    database.find("actionlog", {}, result => {
+        res.send(result);
+    });
+}
 
 module.exports = {
     updateState: updateState,
     getState: getState,
-    updateState: updateState
+    updateState: updateState,
+    getAllHardware: getAllHardware,
+    getActionLog: getActionLog
 }

@@ -4,7 +4,9 @@ const bodyParser = require('body-parser');
 const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
 const hardwaremanager = require('./hardwaremanager.js');
+const cors = require('cors')
 router.use(bodyParser.json()); // for parsing application/json
+router.use(cors());
 router.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 // middleware that is specific to this router
@@ -23,4 +25,10 @@ router.post('/updatestate', upload.array(), function (req, res, next) {
 router.post('/getstate', upload.array(), function (req, res, next) {
     hardwaremanager.getState(req, res);
 });
+router.get('/getallhardware', upload.array(), function(req, res, next){
+    hardwaremanager.getAllHardware(req, res);
+})
+router.get('/getactionlog', upload.array(), function(req, res, next){
+    hardwaremanager.getActionLog(req, res);
+})
 module.exports = router

@@ -4,6 +4,7 @@ const app = express();
 const router = require("./router.js");
 const database = require("./database.js");
 const template = require("./hardwaretemplate.json");
+app.use('/dashboard', express.static('./public'))
 app.use("/service/", router);
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
