@@ -1,8 +1,8 @@
 var MongoClient = require('mongodb').MongoClient
   , assert = require('assert');
-
+const config = require('./config.json');
 // Connection URL
-var url = 'mongodb://localhost:27017/selficientTest';
+var url = `${config.database.url}:${config.database.port}/${config.database.scheme}`;
 // Use connect method to connect to the server
 function connect(callback){
     MongoClient.connect(url, function(err, db) {

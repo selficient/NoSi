@@ -31,4 +31,7 @@ router.get('/getallhardware', upload.array(), function(req, res, next){
 router.get('/getactionlog', upload.array(), function(req, res, next){
     hardwaremanager.getActionLog(req, res);
 })
+router.post('/new', upload.array(), function(req, res, next){
+    hardwaremanager.newHardware(req, res);
+});
 module.exports = router

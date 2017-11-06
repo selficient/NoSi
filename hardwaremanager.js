@@ -1,6 +1,7 @@
 //TODO: add description of file
 const database = require("./database.js");
 const template = require("./hardwaretemplate.json");
+const uuid = require("uuid/v4");
 //database.update("hardware", {name: "Lampje"}, template, ding => {console.log("Hoi")});
 function updateState(req, res){
     //TODO: Add security checks
@@ -22,6 +23,7 @@ function updateState(req, res){
         let date = new Date();
         database.insert("actionlog", {
             hardwareID: result.id,
+            hardwareName: result.name,
             date: date.toLocaleString(),
             interaction: interaction.name,
             action: action.description,
@@ -43,6 +45,16 @@ function getState(req, res){
         res.send(result);
     });
 }
+function newHardware(req, res){
+    //TEMP: Zet de template in de database ipv de json body
+    //database.insert('hardware', template, x => console.log(x));
+    //----------------
+    //TODO: Add security checks
+    if(!req.body.object) return res.send("No Data");
+    req.body.object.id = uuid();
+    database.insert('hardware', req.body.object, x => res.send(x));
+
+}
 function getAllHardware(req, res){
     //TODO: Implementeer security checks
     database.find("hardware", {}, result => {
@@ -61,5 +73,6 @@ module.exports = {
     getState: getState,
     updateState: updateState,
     getAllHardware: getAllHardware,
-    getActionLog: getActionLog
+    getActionLog: getActionLog,
+    newHardware: newHardware
 }

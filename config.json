@@ -1,0 +1,10 @@
+{
+    "database": {
+        "url": "mongodb://localhost",
+        "port": "27017",
+        "scheme": "selficientTest"
+    },
+    "homelink": {
+        "url": "blabla"
+    }
+}
