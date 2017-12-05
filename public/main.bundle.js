@@ -34,7 +34,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-dashboard></app-dashboard>\n"
+module.exports = "<nav>\n    <div class=\"nav-wrapper green\">\n      <a href=\"#\" class=\"brand-logo center\">Selficient Dashboard</a>\n      <ul id=\"nav-mobile\" class=\"right hide-on-med-and-down\">\n          <!-- <li><a (click)=\"refreshData()\"><i class=\"material-icons\">refresh</i></a></li> -->\n      </ul>\n    </div>\n</nav>\n<router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -58,7 +58,7 @@ var AppComponent = (function () {
     return AppComponent;
 }());
 AppComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_0" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* Component */])({
         selector: 'app-root',
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.css")]
@@ -79,6 +79,7 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_dashboard_dashboard_component__ = __webpack_require__("../../../../../src/app/components/dashboard/dashboard.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_database_service__ = __webpack_require__("../../../../../src/app/services/database.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -92,6 +93,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+var appRoutes = [
+    { path: '', component: __WEBPACK_IMPORTED_MODULE_4__components_dashboard_dashboard_component__["a" /* DashboardComponent */] }
+];
 var AppModule = (function () {
     function AppModule() {
     }
@@ -105,7 +110,8 @@ AppModule = __decorate([
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* HttpModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* HttpModule */],
+            __WEBPACK_IMPORTED_MODULE_6__angular_router__["a" /* RouterModule */].forRoot(appRoutes)
         ],
         providers: [__WEBPACK_IMPORTED_MODULE_5__services_database_service__["a" /* DatabaseService */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */]]
@@ -124,7 +130,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".page {\r\n    margin-left: 10px;\r\n    margin: auto;\r\n}\r\n.content-area {\r\n    margin-left: 4px;\r\n    margin-top: 10px;\r\n}\r\n.content-table {\r\n    \r\n}\r\n.table-holder {\r\n    max-height: 800px;\r\n    overflow: auto;\r\n}\r\n.big {\r\n    height: 500px;\r\n}\r\n.table-title {\r\n    text-align: center;\r\n}", ""]);
+exports.push([module.i, ".page {\r\n    margin-left: 10px;\r\n    margin: auto;\r\n}\r\n.content-area {\r\n    margin-left: 4px;\r\n    margin-top: 10px;\r\n}\r\n.content-table {\r\n    \r\n}\r\n.table-holder {\r\n    max-height: 800px;\r\n    overflow: auto;\r\n}\r\n.big {\r\n    height: 500px;\r\n}\r\n.table-title {\r\n    text-align: center;\r\n}\r\n.add-button {\r\n    margin: 10px;\r\n}\r\n.edit-button :hover {\r\n    cursor: pointer;\r\n}\r\n.edit-button {\r\n    text-decoration: none;\r\n    color: gray\r\n}", ""]);
 
 // exports
 
@@ -137,7 +143,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav>\n    <div class=\"nav-wrapper green\">\n      <a href=\"#\" class=\"brand-logo center\">Selficient Dashboard</a>\n      <ul id=\"nav-mobile\" class=\"right hide-on-med-and-down\">\n          <li><a (click)=\"refreshData()\"><i class=\"material-icons\">refresh</i></a></li>\n      </ul>\n    </div>\n</nav>\n{{dat}}\n<div class=\"page\">\n    <!-- <div class=\"row\">\n        <div class=\"col s12 card\">\n            <form action=\"\">\n              <div class=\"row\">\n                <div class=\"col s12 l6\">\n                    <input type=\"text\" placeholder=\"Name\">\n                </div>\n                <div class=\"col s12 l6\">\n                    <input type=\"text\" placeholder=\"Ander ding\">\n                </div>\n              </div>\n              \n            </form>\n        </div>\n      \n      \n      \n    </div> -->\n    <div class=\"row\">\n            <div class=\"col s12 l7\">\n              <div class=\"content-area card table-holder\">\n                <h5 class=\"table-title\">Hardware</h5>\n                <table class=\"striped content-table\">\n                    <thead>\n                        <tr>\n                            <th>Name</th>\n                            <th>Interactions</th>\n                            <th>States</th>\n                        </tr>\n                      </thead>\n              \n                      <tbody>\n                        <tr *ngFor=\"let hardware of housethings\">\n                          <td>{{hardware.name}}</td>\n                          <td>\n                            <div *ngFor=\"let interaction of hardware.interactions\">\n                              {{interaction.name}}\n                            </div>\n                          </td>\n                          <td>\n                            <div *ngFor=\"let state of hardware.state\">\n                              {{state.name}}: {{state.state}} \n                            </div>\n                          </td>\n                        </tr>\n                      </tbody>\n                </table>\n              </div>\n              </div>\n              <div class=\"col s12 l5 \">\n                <div class=\"content-area card table-holder\">\n                    <h5 class=\"table-title\">Actionlog</h5>\n                    <table class=\"striped content-table\">\n                        <thead>\n                            <tr>\n                                <th>Hardware</th>\n                                <th>Name</th>\n                                <th>Date</th>\n                                <th>Action</th>\n                                <th>State</th>\n                            </tr>\n                          </thead>\n                  \n                          <tbody>\n                            <tr *ngFor=\"let logItem of actionlog\">\n                              <td>{{logItem.hardwareID}}</td>\n                              <td>{{logItem.hardwareName}}</td>\n                              <td>{{logItem.date}}</td>\n                              <td>{{logItem.action}}</td>\n                              <td>{{logItem.state}}</td>\n                            </tr>\n                          </tbody>\n                    </table>\n                </div>\n              \n        </div>\n    </div>\n</div>\n"
+module.exports = "<div class=\"page\">\n    <!-- <div class=\"row\">\n        <div class=\"col s12 card\">\n            <form action=\"\">\n              <div class=\"row\">\n                <div class=\"col s12 l6\">\n                    <input type=\"text\" placeholder=\"Name\">\n                </div>\n                <div class=\"col s12 l6\">\n                    <input type=\"text\" placeholder=\"Ander ding\">\n                </div>\n              </div>\n              \n            </form>\n        </div>\n      \n      \n      \n    </div> -->\n    <div class=\"card horizontal hide\">\n        <div class=\"card-stacked\">\n          <div class=\"card-content\">\n            <p>HET IS JE BOY REBEL WHOAH</p>\n          </div>\n          <div class=\"card-action\">\n            <a href=\"#\">Close</a>\n          </div>\n        </div>\n      </div>\n    <div class=\"row\">\n            <div class=\"col s12 l7\">\n              <div class=\"content-area card table-holder\">\n                <h5 class=\"table-title\">Hardware</h5>\n                <table class=\"striped content-table\">\n                    <thead>\n                        <tr>\n                            <th>Name</th>\n                            <th>Interactions</th>\n                            <th>States</th>\n                        </tr>\n                      </thead>\n              \n                      <tbody>\n                        <tr *ngFor=\"let hardware of housethings; index as i\">\n                          <td>{{hardware.name}}</td>\n                          <td>\n                            <div *ngFor=\"let interaction of hardware.interactions\">\n                              {{interaction.name}}\n                            </div>\n                          </td>\n                          <td>\n                            <div *ngFor=\"let state of hardware.state\">\n                              {{state.name}}: {{state.state}} \n                            </div>\n                            \n                          </td>\n                          <td>\n                            <a class = \"edit-button\" (click)=\"showDetails(i)\"><i class=\"material-icons\">info</i></a>\n                          </td>\n                        </tr>\n                      </tbody>\n                </table>\n                <a class=\"btn-floating btn-large waves-effect waves-light red right add-button\" ><i class=\"material-icons\">add</i></a>\n              </div>\n              </div>\n              <div class=\"col s12 l5 \">\n                <div class=\"content-area card table-holder\">\n                    <h5 class=\"table-title\">Actionlog</h5>\n                    <table class=\"striped content-table\">\n                        <thead>\n                            <tr>\n                                <th>Hardware</th>\n                                <th>Name</th>\n                                <th>Date</th>\n                                <th>Action</th>\n                                <th>State</th>\n                            </tr>\n                          </thead>\n                  \n                          <tbody>\n                            <tr *ngFor=\"let logItem of actionlog\">\n                              <td>{{logItem.hardwareID}}</td>\n                              <td>{{logItem.hardwareName}}</td>\n                              <td>{{logItem.date}}</td>\n                              <td>{{logItem.action}}</td>\n                              <td>{{logItem.state}}</td>\n                            </tr>\n                          </tbody>\n                    </table>\n                </div>\n              \n        </div>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -162,6 +168,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var DashboardComponent = (function () {
     function DashboardComponent(databaseService) {
         this.databaseService = databaseService;
+        this.housethings = [];
+        this.detailsVisable = false;
     }
     DashboardComponent.prototype.ngOnInit = function () {
         this.getHardware();
@@ -186,10 +194,12 @@ var DashboardComponent = (function () {
         this.getHardware();
         this.getActionLog();
     };
+    DashboardComponent.prototype.showDetails = function (id) {
+    };
     return DashboardComponent;
 }());
 DashboardComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_0" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* Component */])({
         selector: 'app-dashboard',
         template: __webpack_require__("../../../../../src/app/components/dashboard/dashboard.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/dashboard/dashboard.component.css")],
@@ -227,13 +237,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var DatabaseService = (function () {
     function DatabaseService(http) {
         this.http = http;
+        //this.ip = "http://154.16.159.176:3000"; //VPS
+        this.ip = "http://localhost:3000"; //Local
     }
     DatabaseService.prototype.fetchHardware = function () {
-        return this.http.get("http://localhost:3000/service/getallhardware")
+        return this.http.get(this.ip + "/service/getallhardware")
             .map(function (res) { return res.json(); });
     };
     DatabaseService.prototype.fetchActionLog = function () {
-        return this.http.get("http://localhost:3000/service/getactionlog")
+        return this.http.get(this.ip + "/service/getactionlog")
             .map(function (res) { return res.json(); });
     };
     return DatabaseService;

@@ -2,7 +2,8 @@ var MongoClient = require('mongodb').MongoClient
   , assert = require('assert');
 const config = require('./config.json');
 // Connection URL
-var url = `${config.database.url}:${config.database.port}/${config.database.scheme}`;
+const url = `${config.database.url}:${config.database.port}/${config.database.scheme}`;
+
 // Use connect method to connect to the server
 function connect(callback){
     MongoClient.connect(url, function(err, db) {
@@ -22,22 +23,26 @@ function insert(dbName, item ,callback) {
     });
 }
 
-function find(dbName, query, callback){
-    connect(db =>{
-        let collection = db.collection(dbName);
-        collection.find(query).toArray(function(err, docs) {
-        assert.equal(err, null);
-        console.log("Found the following records");
-        console.log(docs)
-        callback(docs);
+function find(dbName, query, filter = () => {return true;}){
+    return new Promise((resolve, reject) => {
+        connect(db =>{
+            let collection = db.collection(dbName);
+            collection.find(query).toArray(function(err, docs) {
+                if(err != null) reject(err);
+                let results = docs.filter(filter);
+                console.log("Found the following records");
+                console.log(results);
+                resolve(results);
+            });
         });
     });
+
 }
 
 function update(dbName, query, newObj, callback){
     connect(db=>{
         let collection = db.collection(dbName);
-        collection.updateOne(query, newObj, (err, docs) => {
+        collection.updateOne(query, newObj, (err) => {
             if(!err){
                 callback("success");
             }
