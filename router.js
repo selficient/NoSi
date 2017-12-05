@@ -34,5 +34,8 @@ router.get('/getactionlog', upload.array(), function(req, res){
 router.post('/new', upload.array(), function(req, res){
     hardwaremanager.newHardware(req, res);
 });
+router.get('/test', upload.array(), function(req, res){
+    hardwaremanager.testSecurity(req, res);
+});
 
 module.exports = router;

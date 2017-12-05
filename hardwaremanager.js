@@ -34,6 +34,11 @@ function updateState(req, res){
         database.update("hardware", {name: req.body.name}, result, x => res.send(x));
     }).catch(err => res.send(err));
 }
+function testSecurity(req, res){
+    //TODO: Test security HIER
+
+    res.send("Response");
+}
 function getState(req, res){
     //TODO: Add security checks
     if(!req.body || !req.body.name){
@@ -71,5 +76,6 @@ module.exports = {
     getState: getState,
     getAllHardware: getAllHardware,
     getActionLog: getActionLog,
-    newHardware: newHardware
+    newHardware: newHardware,
+    testSecurity: testSecurity
 };
