@@ -1,6 +1,7 @@
 //TODO: add description of file
 const database = require("./database.js");
 const uuid = require("uuid/v4");
+
 //database.update("hardware", {name: "Lampje"}, template, ding => {console.log("Hoi")});
 function updateState(req, res){
     //TODO: Add security checks
@@ -36,6 +37,8 @@ function updateState(req, res){
 }
 function testSecurity(req, res){
     //TODO: Test security HIER
+    // HTTPS implementeren
+    // API key eraan 
 
     res.send("Response");
 }
