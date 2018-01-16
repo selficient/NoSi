@@ -4,7 +4,8 @@ var https = require('https');
 const express = require('express');
 const app = express();
 const router = require("./router.js");
-app.use(require('helmet')());
+var helmet = require('helmet')
+app.use(helmet());
 
   
 app.use('/dashboard', express.static('./public'));
