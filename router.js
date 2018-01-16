@@ -22,7 +22,7 @@ router.get('/', function (req, res) {
 router.post('/updatestate', upload.array(), function (req, res) {
     hardwaremanager.updateState(req, res);
 });
-router.post('/getstate', upload.array(), function (req, res) {
+router.get('/getstate/:name', upload.array(), function (req, res) {
     hardwaremanager.getState(req, res);
 });
 router.get('/getallhardware', upload.array(), function(req, res){
