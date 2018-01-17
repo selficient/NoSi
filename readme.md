@@ -7,6 +7,7 @@
 - Public: ``https://[ip]:3000/service``
 
 **Route descriptions**
+
 | Method | Path | Description |
 | -------- | ------ | ------------- |
 | GET | /getallhardware?apikey=``APIKEY`` | Returns a list of all hardware in the database |
