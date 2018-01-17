@@ -4,6 +4,7 @@ var https = require('https');
 const express = require('express');
 const app = express();
 const router = require("./router.js");
+const port = 3000;
 var helmet = require('helmet')
 app.use(helmet());
 
@@ -15,17 +16,11 @@ app.get("/", (req, res) => {
 });
 
 const options = {
-    key: fs.readFileSync('./key.pem', 'utf8'),
-    cert: fs.readFileSync('./server.crt', 'utf8')
+    key: fs.readFileSync('./turnipinator.pem', 'utf8'),
+    cert: fs.readFileSync('./turnipinator.crt', 'utf8')
 };
 
-//app.listen(3000)
-https.createServer(options, app).listen(8443);
-
-
-// app.listen(3000, function () {
-//   console.log('Example app listening on port 3000!');
-// });
+https.createServer(options, app).listen(port);
 
 
 
