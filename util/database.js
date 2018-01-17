@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient
   , assert = require('assert');
-const config = require('./config.json');
+const config = require('../config.json');
 // Connection URL
 const url = `${config.database.url}:${config.database.port}/${config.database.scheme}`;
 

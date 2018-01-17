@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const config = require("./config.json");
 const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
-const hardwaremanager = require('./hardwaremanager.js');
+const hardwaremanager = require('./services/hardwaremanager.js');
 const cors = require('cors');
 router.use(bodyParser.json()); // for parsing application/json
 router.use(cors());

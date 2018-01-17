@@ -6,9 +6,8 @@ const app = express();
 const router = require("./router.js");
 const port = 3000;
 var helmet = require('helmet')
-app.use(helmet());
 
-  
+app.use(helmet());
 app.use('/dashboard', express.static('./public'));
 app.use("/service/", router);
 app.get("/", (req, res) => {

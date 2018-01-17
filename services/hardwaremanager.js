@@ -1,5 +1,5 @@
 //TODO: add description of file
-const database = require("./database.js");
+const database = require("../util/database.js");
 const uuid = require("uuid/v4");
 
 function hardwaremanager() {
