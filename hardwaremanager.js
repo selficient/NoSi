@@ -1,7 +1,11 @@
 //TODO: add description of file
 const database = require("./database.js");
 const uuid = require("uuid/v4");
+
 function hardwaremanager() {
+    
+    //Checks if apikey is valid
+    
 
     return {
         updateState(req, res) {

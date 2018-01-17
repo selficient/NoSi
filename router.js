@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const config = require("./config.json");
 const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
 const hardwaremanager = require('./hardwaremanager.js');
@@ -14,6 +15,7 @@ router.use(function timeLog (req, res, next) {
   console.log('Time: ', Date.now());
   next();
 });
+router.use(validateAPIKey);
 
 router.get('/', function (req, res) {
   res.send('Oh hallo, wat dou jij nou hier?');
@@ -38,4 +40,10 @@ router.get('/test', upload.array(), function(req, res){
     hardwaremanager.testSecurity(req, res);
 });
 
+function validateAPIKey(req, res, next){
+    if(!req.query.apikey) return res.sendStatus(401);
+    if(req.query.apikey !== config.APIKey) res.sendStatus(401);
+
+    next();
+}
 module.exports = router;
