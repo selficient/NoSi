@@ -3,6 +3,89 @@
 */
 
 //De functie returnd een object ()
+
+function getData(){
+      //use the find() API and pass an empty query object to retrieve all records
+      dbObject.collection("collectioName").find({}).toArray(function(err, docs){
+        if ( err ) throw err;
+        var dateArray = [];
+        var amountPerDayArray = [];
+        var hardwareIDArray = [];
+     
+        for ( index in docs){
+          var doc = docs[index];
+          //category array
+          var date = doc['date'];
+          //series 1 values array
+          var activated = doc['activated'];
+          //series 2 values array
+          var hardwareId = doc['hardwareId'];
+          dateArray.push({"label": date});
+          amountPerDayArray.push({"value" : activated});
+          hardwareIDArray.push({"value" : hardwareId});
+        }
+     
+        var dataset = [
+          {
+            "seriesname" : "AmountperDay",
+            "data" : amountPerDayArray
+          },
+          {
+            "seriesname" : "HardwareID",
+            "data": dateArray
+          }
+        ];
+     
+        var response = {
+          "dataset" : dataset,
+          "categories" : dateArray
+        };
+      });
+    }
+
+// ajax method to get the data
+var chartData;
+$(function(){
+  $.AJAX({
+    url: 'http://localhost:3300/fuelPrices',
+    type: 'GET',
+    success : function(data) {
+      chartData = data;
+      console.log(data);
+    }
+  });
+});
+
+//BUILDING THE GRAPH ITSELF
+
+var chartProperties = {
+    "caption": "Variation of activations of the lamp",
+    "numberprefix": "Rs",
+    "xAxisName": "Dates",
+    "yAxisName": "Amount of activations "
+};
+
+
+var categoriesArray = [{
+      "category" : data["categories"]
+}];
+
+
+var lineChart = new FusionCharts({
+    type: 'msline',
+    renderAt: 'chart-location',
+    width: '100Ω',
+    height: '600',
+    dataFormat: 'json',
+    dataSource: {
+        chart: chartProperties,
+        categories : categoriesArray,
+        dataset : data["dataset"]
+    }
+});
+
+lineChart.render();
+
 function graphService(){
 
   return {
@@ -16,6 +99,9 @@ function graphService(){
       Zou dit je response moeten zijn:
       > WhyHelloDidntSeeYouThere
       */
+
+
+
 
       const vraag = req.query.vraag;
       res.send(vraag);
