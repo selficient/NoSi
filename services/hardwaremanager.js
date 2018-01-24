@@ -6,15 +6,15 @@ function hardwaremanager() {
     
     //Checks if apikey is valid
     
-
     return {
         updateState(req, res) {
-            //TODO: Add security checks
+            //TODO: Add security checks try and do this with API keys. 
             if (!req.body || !req.body.name || !req.body.interaction || !req.body.state) {
                 return res.send("No Data Found");
             }
             console.log(req.body);
-            //Zoek hardware in de database
+
+            // Zoek hardware in de database 
             database.find("hardware", { name: req.body.name }).then(result => {
                 if (result.length == 0) {
                     return res.send("No Data Found");
