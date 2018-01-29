@@ -4,65 +4,65 @@
 
 // De functie returnd een object ()
 
-function getData(){
-      // this is only a setup and doesn't necessarily work rigth now, this needs to be finished
-      // documentation for this can be found on: 
-      // https://www.fusioncharts.com/dev/using-with-server-side-languages/tutorials/creating-interactive-charts-using-node-express-and-mongodb.html
-      // use the find() API and pass an empty query object to retrieve all records
+// function getData(){
+//       // this is only a setup and doesn't necessarily work rigth now, this needs to be finished
+//       // documentation for this can be found on: 
+//       // https://www.fusioncharts.com/dev/using-with-server-side-languages/tutorials/creating-interactive-charts-using-node-express-and-mongodb.html
+//       // use the find() API and pass an empty query object to retrieve all records
       
-      dbObject.collection("collectioName").find({}).toArray(function(err, docs){
-        if ( err ) throw err;
-        var dateArray = [];
-        var amountPerDayArray = [];
-        var hardwareIDArray = [];
+//       dbObject.collection("collectioName").find({}).toArray(function(err, docs){
+//         if ( err ) throw err;
+//         var dateArray = [];
+//         var amountPerDayArray = [];
+//         var hardwareIDArray = [];
      
-        for ( index in docs){
-          var doc = docs[index];
+//         for ( index in docs){
+//           var doc = docs[index];
 
-          //category array
-          var date = doc['date'];
+//           //category array
+//           var date = doc['date'];
 
-          //series 1 values array
-          var activated = doc['activated'];
+//           //series 1 values array
+//           var activated = doc['activated'];
 
-          //series 2 values array
-          var hardwareId = doc['hardwareId'];
+//           //series 2 values array
+//           var hardwareId = doc['hardwareId'];
 
-          dateArray.push({"label": date});
-          amountPerDayArray.push({"value" : activated});
-          hardwareIDArray.push({"value" : hardwareId});
-        }
+//           dateArray.push({"label": date});
+//           amountPerDayArray.push({"value" : activated});
+//           hardwareIDArray.push({"value" : hardwareId});
+//         }
      
-//         var dataset = [
-//           {
-//             "seriesname" : "AmountperDay",
-//             "data" : amountPerDayArray
-//           },
-//           {
-//             "seriesname" : "HardwareID",
-//             "data": dateArray
-//           }
-//         ];
+// //         var dataset = [
+// //           {
+// //             "seriesname" : "AmountperDay",
+// //             "data" : amountPerDayArray
+// //           },
+// //           {
+// //             "seriesname" : "HardwareID",
+// //             "data": dateArray
+// //           }
+// //         ];
      
-        var response = {
-          "dataset" : dataset,
-          "categories" : dateArray
-        };
-      });
-    }
+//         var response = {
+//           "dataset" : dataset,
+//           "categories" : dateArray
+//         };
+//       });
+//     }
 
-// ajax method to get the data from MongoDB
-var chartData;
-$(function(){
-  $.AJAX({
-    url: 'http://localhost:3300/hardware', // not the correct URL
-    type: 'GET',
-    success : function(data) {
-      chartData = data;
-      console.log(data);
-    }
-  });
-});
+// // ajax method to get the data from MongoDB
+// var chartData;
+// $(function(){
+//   $.AJAX({
+//     url: 'http://localhost:3300/hardware', // not the correct URL
+//     type: 'GET',
+//     success : function(data) {
+//       chartData = data;
+//       console.log(data);
+//     }
+//   });
+// });
 
 //BUILDING THE GRAPH ITSELF
 
