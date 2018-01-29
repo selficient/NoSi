@@ -10,5 +10,7 @@
     "FlaSi": {
         "urlbase": "http://192.168.1.100:8080"
     },
-    "runmode": "debug"
+    "runmode": "debug",
+    "UseHttps": "false",
+    "HttpCertificateFileName": "turnipinator" 
 }

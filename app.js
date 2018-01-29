@@ -1,6 +1,7 @@
 //hallo dit is een app.js
 var fs = require('fs');
 var https = require('https');
+const Config = require('./config.json');
 const express = require('express');
 const app = express();
 const router = require("./router.js");
@@ -16,14 +17,17 @@ app.get("/", (req, res) => {
     res.send('<head><style>#face{animation: face-color 5s infinite; animation-direction: alternate;}@keyframes face-color {from {color:black;} to {color:Chartreuse}}</style></head><body><h1 id="face">(⊙_☉)</h1></body>');
 });
 
+//Options for HTTPS
 const options = {
-    key: fs.readFileSync('./turnipinator.pem', 'utf8'),
-    cert: fs.readFileSync('./turnipinator.crt', 'utf8')
+    key: fs.readFileSync(`./${Config.HttpCertificateFileName}.pem', 'utf8`),
+    cert: fs.readFileSync(`./${Config.HttpCertificateFileName}.crt', 'utf8`)
 };
-app.listen(3000, ()=> console.log("listening on port 3000!"));
-//https.createServer(options, app).listen(port);
 
-
-
-//database.insert("hardware", template, () => console.log("bla"));
-//database.find("hardware", {name:"Lampje"}, () => console.log("bla"))
+//Check config.json if it should run on HTTPS or HTTP.
+if(Config.UseHttps == true){
+    https.createServer(options, app).listen(port);
+    console.log("listening on port 3000! and using HTTPS")
+}
+else {
+    app.listen(3000, ()=> console.log("listening on port 3000! and using HTTP"));
+}
