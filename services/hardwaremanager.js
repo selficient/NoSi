@@ -10,7 +10,7 @@ function hardwaremanager() {
     
     return {
         updateState(req, res) {
-            //TODO: Add security checks
+            //TODO: Add security checks try and do this with API keys. 
             if (!req.body || !req.body.name || !req.body.interaction || !req.body.state) {
                 return res.send("No Data Found");
             }

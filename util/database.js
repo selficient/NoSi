@@ -1,6 +1,8 @@
 var MongoClient = require('mongodb').MongoClient
   , assert = require('assert');
 const config = require('../config.json');
+
+// documentation for use of MongoDB database can be found online
 // Connection URL
 const url = `${config.database.url}:${config.database.port}/${config.database.scheme}`;
 
