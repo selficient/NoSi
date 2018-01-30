@@ -23,7 +23,7 @@ The file should be structured like this:
     }
 ]
 ```
----
+
 ## Routes
 ---
 **Base urls:**
@@ -42,14 +42,20 @@ Remember to change ``https`` to ``http`` when using HTTP
 | POST | /updatestate?apikey=``APIKEY`` | Changes the state of hardware, exspects the body to be in this format:<br>**name**: Wekker<br>**interaction**: alarm<br>**state**: off |
 | POST | /newhardware?apikey=``APIKEY`` | Add hardware to database |
 
----
+
 ## Deployment
 ---
 The service has two requirements:
 - MongoDB
 - NodeJS
+- (Optional) A frontend
 
 Install and run MongoDB by following [these instructions](https://docs.mongodb.com/manual/installation/)<br>
 Clone this repository and run ``npm install``<br>
-Run the server with ``node app.js``<br>
-You might want to use a system service when using linux
+The database needs to be seeded with some initial hardware.<br>
+You can do this by filling the database with actual hardware or use mock hardware.<br>
+To fill the database with mock hardware run: ``npm run seed``<br>
+Run the server with ``npm start``<br>
+You might want to use a system service when using linux.<br>
+To include a frontend you first need to build/compile it (when using Angular or React), then put it in ``/public`` <br>
+The frontend can be reached by navigating to ``[url]/dashboard`` (when using Angular make sure you set the base url to "/dashboard" instead of "/" before building).
