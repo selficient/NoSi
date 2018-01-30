@@ -2,7 +2,7 @@
     "database": {
         "url": "mongodb://localhost",
         "port": "27017",
-        "scheme": "selficientTest"
+        "scheme": "NoSi"
     },
     "homelink": {
         "url": "blabla"

@@ -1,14 +1,10 @@
 const Config = require("../config.json");
 
-function Debug(){
+function Debugger(tag){
 
-    return {
-        log(tag, msg){
-            
-            if(Config.runmode.toLowerCase() === "debug") console.log(`${tag}: ${msg}`);
-        
-        }
+    return function(msg) {
+        if(Config.runmode.toLowerCase() === "debug") console.log(`${tag}: ${msg}`);
     }
 }
 
-module.exports = Debug();
+module.exports = Debugger;

@@ -2,6 +2,10 @@ var MongoClient = require('mongodb').MongoClient
   , assert = require('assert');
 const config = require('../config.json');
 
+const TAG = "Database";
+const Debugger = require('./debug.js');
+const Debug = Debugger(TAG);
+
 // documentation for use of MongoDB database can be found online
 // Connection URL
 const url = `${config.database.url}:${config.database.port}/${config.database.scheme}`;
@@ -10,7 +14,7 @@ const url = `${config.database.url}:${config.database.port}/${config.database.sc
 function connect(callback){
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
-        console.log("Connected successfully to server");
+        Debug("Connected successfully to server");
         callback(db);
         db.close();
     });
@@ -32,8 +36,8 @@ function find(dbName, query, filter = () => {return true;}){
             collection.find(query).toArray(function(err, docs) {
                 if(err != null) reject(err);
                 let results = docs.filter(filter);
-                console.log("Found the following records");
-                console.log(results);
+                Debug("Found the following records");
+                Debug(results);
                 resolve(results);
             });
         });

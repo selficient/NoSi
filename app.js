@@ -26,8 +26,8 @@ const options = {
 //Check config.json if it should run on HTTPS or HTTP.
 if(Config.UseHttps == true){
     https.createServer(options, app).listen(port);
-    console.log("listening on port 3000! and using HTTPS")
+    console.log(`listening on port ${port}! and using HTTPS`)
 }
 else {
-    app.listen(3000, ()=> console.log("listening on port 3000! and using HTTP"));
+    app.listen(3000, ()=> console.log(`listening on port ${port}! and using HTTP`));
 }

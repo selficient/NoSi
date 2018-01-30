@@ -1,8 +1,9 @@
 //TODO: add description of file
 const database = require("../util/database.js");
 const uuid = require("uuid/v4");
-const Debug = require("../util/debug.js");
 const TAG = "Hardware Manager";
+const Debugger = require("../util/debug.js");
+const Debug = Debugger(TAG);
 const flasiservice = require("./flasiservice.js");
 function hardwaremanager() {
     
@@ -15,7 +16,7 @@ function hardwaremanager() {
                 return res.send("No Data Found");
             }
 
-            Debug.log(TAG, req.body);
+            Debug(req.body);
             
             //Zoek hardware in de database
             database.find("hardware", { name: req.body.name }).then(result => {
@@ -41,7 +42,7 @@ function hardwaremanager() {
                     interaction: interaction.name,
                     action: action.description,
                     state: action.code
-                }, () => Debug.log(TAG, "inserted"));
+                }, () => Debug("inserted"));
 
                 result.state.find(x => x.name === req.body.interaction).state = action.code;
                 //Update de daadwerkelijke state in de database
@@ -52,7 +53,7 @@ function hardwaremanager() {
 
                 //Send request to FlaSi
                 
-            }).catch(err => console.log(err));
+            }).catch(err => Debug(err));
         },
 
         testSecurity(req, res) {

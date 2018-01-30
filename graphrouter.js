@@ -2,13 +2,16 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const config = require("./config.json");
-const Debug = require("./util/debug.js");
 const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
 const cors = require('cors');
 const APIKeys = require("./APIKEYS.json");
 const graphService = require("./services/graphservice.js");
+
+//Create a Debugger
 const TAG = "Graph Router"
+const Debugger = require("./util/debug.js");
+const Debug = Debugger(TAG);
 
 router.use(bodyParser.json()); // for parsing application/json
 router.use(cors());
@@ -29,7 +32,7 @@ router.get('/voorbeeldroute', (req, res) =>{
 
 function validateAPIKey(req, res, next){
     //Valideer API key, Key object heeft een role die gebruikt kan worden om dingen af te schermen (Wordt nu nog niet gebruikt)
-    Debug.log(TAG, "Validating");
+    Debug("Validating");
     if(!req.query.apikey) return res.sendStatus(401);
     if(!APIKeys.some(k => k.key === req.query.apikey)) res.sendStatus(401);
     
