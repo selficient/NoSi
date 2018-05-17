@@ -29,7 +29,7 @@ function hardwaremanager() {
                 //TODO: Dit stuk afhandelen in db filter:
                 let interaction = result.interactions.find(x => x.name === req.body.interaction);
                 if (!interaction) return res.send("No Interaction Found");
-                let action = interaction.actions.find(x => x.description === req.body.state);
+                let action = interaction.actions.find(x => x.code === req.body.state);
                 if (!action) return res.send("No action found");
 
                 let date = new Date();
@@ -43,12 +43,14 @@ function hardwaremanager() {
                     action: action.description,
                     state: action.code
                 }, () => Debug("inserted"));
-
-                result.state.find(x => x.name === req.body.interaction).state = action.code;
+				//console.log(result);
+				result.state.code = action.code;
+				console.log(result);
+              //  result.state.find(x => x.name === req.body.interaction).state = action.code;
                 //Update de daadwerkelijke state in de database
                 database.update("hardware", { name: req.body.name }, result, x => {
                     res.send(x);
-                    flasiservice.sendStateChange(result.flasi_id,0, action.code);
+                  //  flasiservice.sendStateChange(result.flasi_id,0, action.code);
                 });
 
                 //Send request to FlaSi

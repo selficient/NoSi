@@ -19,15 +19,15 @@ app.get("/", (req, res) => {
 
 //Options for HTTPS
 const options = {
-    key: fs.readFileSync(`./${Config.HttpCertificateFileName}.pem', 'utf8`),
-    cert: fs.readFileSync(`./${Config.HttpCertificateFileName}.crt', 'utf8`)
+    //key: fs.readFileSync(`./${Config.HttpCertificateFileName}.pem', 'utf8`),
+    //cert: fs.readFileSync(`./${Config.HttpCertificateFileName}.crt', 'utf8`)
 };
 
 //Check config.json if it should run on HTTPS or HTTP.
-if(Config.UseHttps == true){
-    https.createServer(options, app).listen(port);
-    console.log(`listening on port ${port}! and using HTTPS`)
+/*if(Config.UseHttps){
+//    https.createServer(options, app).listen(port);
+//    console.log(`listening on port ${port}! and using HTTPS`)
 }
-else {
+else {*/
     app.listen(3000, ()=> console.log(`listening on port ${port}! and using HTTP`));
-}
+//}

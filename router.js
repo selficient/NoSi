@@ -23,7 +23,7 @@ router.use(function timeLog (req, res, next) {
 });
 
 //Register API key validation as middleware for all '/service' routes
-router.use(validateAPIKey);
+//router.use(validateAPIKey);
 
 router.get('/', function (req, res) {
   res.send('Oh hallo, wat dou jij nou hier?');
@@ -56,10 +56,12 @@ router.get('/testflasi', upload.array(), (req, res) => {
 
 function validateAPIKey(req, res, next){
     //Valideer API key, Key object heeft een role die gebruikt kan worden om dingen af te schermen (Wordt nu nog niet gebruikt)
-    Debug.log(TAG, "Validating");
+    console.log(TAG, "Validating");
+  //  console.log(TAG, res.query.apikey);
+
     if(!req.query.apikey) return res.sendStatus(401);
     if(!APIKeys.some(k => k.key === req.query.apikey)) res.sendStatus(401);
-    
+
     next();
 }
 module.exports = router;
