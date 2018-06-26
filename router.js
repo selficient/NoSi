@@ -32,8 +32,14 @@ router.get('/', function (req, res) {
 router.post('/updatestate', upload.array(), function (req, res) {
     hardwaremanager.updateState(req, res);
 });
+router.post('/updatebase', upload.array(), function (req, res) {
+    hardwaremanager.updateBase(req, res);
+});
 router.get('/getstate/:name', upload.array(), function (req, res) {
     hardwaremanager.getState(req, res);
+});
+router.get('/getbase/:name', upload.array(), function (req, res) {
+    hardwaremanager.getBase(req, res);
 });
 router.get('/getallhardware', upload.array(), function(req, res){
     hardwaremanager.getAllHardware(req, res);
