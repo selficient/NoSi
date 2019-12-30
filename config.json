@@ -1,8 +1,9 @@
 {
     "database": {
-        "url": "mongodb://localhost",
-        "port": "27017",
-        "scheme": "NoSi"
+        "host": "localhost",
+        "user": "me",
+        "password": "",
+        "database": ""
     },
     "homelink": {
         "url": "blabla"
