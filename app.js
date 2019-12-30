@@ -29,5 +29,5 @@ const options = {
 //    console.log(`listening on port ${port}! and using HTTPS`)
 }
 else {*/
-    app.listen(3001, ()=> console.log(`listening on port ${port}! and using HTTP`));
+    app.listen(port, ()=> console.log(`listening on port ${port}! and using HTTP`));
 //}

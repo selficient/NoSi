@@ -5,7 +5,7 @@ const config = require("./config.json");
 const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
 const cors = require('cors');
-const APIKeys = require("./APIKEYS.json");
+//const APIKeys = require("./APIKEYS.json");
 const graphService = require("./services/graphservice.js");
 
 //Create a Debugger
@@ -18,7 +18,7 @@ router.use(cors());
 router.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 //Register API key validation as middleware for all '/service' routes
-router.use(validateAPIKey);
+//router.use(validateAPIKey);
 
 /*
     Hier worden routes gelinkt aan functions in graphservice.js
