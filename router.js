@@ -47,6 +47,9 @@ router.get('/getallhardware', upload.array(), function(req, res){
 router.get('/getactionlog', upload.array(), function(req, res){
     hardwaremanager.getActionLog(req, res);
 });
+router.get('/getareas', upload.array(), function(req, res){
+    hardwaremanager.getAreas(req, res);
+});
 router.post('/new', upload.array(), function(req, res){
     hardwaremanager.newHardware(req, res);
 });

@@ -1,9 +1,9 @@
 {
     "database": {
         "host": "localhost",
-        "user": "me",
-        "password": "",
-        "database": ""
+        "user": "foo",
+        "password": "bar",
+        "database": "selficient-hardware"
     },
     "homelink": {
         "url": "blabla"

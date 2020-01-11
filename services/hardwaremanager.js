@@ -1,5 +1,5 @@
 //TODO: add description of file
-const database = require("../util/database.js");
+const databaseClass = require("../util/database.js");
 const uuid = require("uuid/v4");
 const TAG = "Hardware Manager";
 const Debugger = require("../util/debug.js");
@@ -7,6 +7,8 @@ const Debug = Debugger(TAG);
 const flasiservice = require("./flasiservice.js");
 
 function hardwaremanager() {
+
+    var database = new databaseClass();
 
     //Checks if apikey is valid
     databasename = "area";
@@ -90,53 +92,52 @@ function hardwaremanager() {
         //
         //     }).catch(err => Debug(err));
         // },
-        updateState(req, res) {
+        async updateState(req, res) {
             //TODO: Add security checks try and do this with API keys.
             if (!req.body || !req.body.name || !req.body.interaction || !req.body.state) {
                 return res.send("No Data Found");
             }
 
-            Debug(req.body);
-
             //Zoek hardware in de database
-            database.find("hardware", {name: req.body.name}).then(result => {
-                console.log(result);
-                if (result.length == 0) {
+            try {
+                let hardwareResult = await database.find("hardware", `name = '${req.body.name}'`);
+                if (hardwareResult.length == 0) {
                     return res.send("No Data Found");
                 }
                 //Haar result uit een array voor convenience (de array bevat maar 1 item)
-                result = result[0];
+                hardwareResult = hardwareResult[0];
 
                 //TODO: Dit stuk afhandelen in db filter:
-                let interaction = result.interactions.find(x => x.name === req.body.interaction);
-                if (!interaction) return res.send("No Interaction Found");
-                let action = interaction.actions.find(x => x.code === req.body.state);
-                if (!action) return res.send("No action found");
-
-                let date = new Date();
+                let interactionResult = await database.find("interactions", `hardware_id = ${hardwareResult.id} AND name = '${req.body.interaction}' AND code = '${req.body.state}'`);
+                interactionResult = interactionResult[0];
+                if (!interactionResult) res.send("No Interaction Found");
 
                 //Insert een niew actionlog item in de database
-                database.insert("actionlog", {
-                    hardwareID: result.id,
-                    hardwareName: result.name,
-                    date: date.toLocaleString(),
-                    interaction: interaction.name,
-                    action: action.description,
-                    state: action.code
-                }, () => Debug("inserted"));
-                //console.log(result);
-                result.state.code = action.code;
-                console.log(result);
-                //  result.state.find(x => x.name === req.body.interaction).state = action.code;
-                //Update de daadwerkelijke state in de database
-                database.update("hardware", {name: req.body.name}, result, x => {
-                    res.send(x);
-                    //  flasiservice.sendStateChange(result.flasi_id,0, action.code);
+                let result = await database.insert("log", {
+                    hardware_id: hardwareResult.id,
+                    timestamp: 'CURRENT_TIMESTAMP()',
+                    interactions_id: interactionResult.id,
+                    state: interactionResult.code
                 });
 
-                //Send request to FlaSi
+                if(result) Debug(`Inserted into log: ${result}`);
 
-            }).catch(err => Debug(err));
+                //console.log(result);
+                hardwareResult.state = interactionResult.code;
+                //  result.state.find(x => x.name === req.body.interaction).state = action.code;
+                //Update de daadwerkelijke state in de database
+                let updateResult = await database.update("hardware", "state", hardwareResult.state, `id = ${hardwareResult.id}`);
+                if(updateResult) {
+                    Debug(`updated ${updateResult} rows`);
+                    res.send ('succes');
+                }
+
+                //Send request to FlaSi
+            }
+            catch(error) {
+                Debug(error);
+                res.send(error);
+            }
         },
         updateBase(req, res) {
             console.log(req.body);
@@ -161,17 +162,23 @@ function hardwaremanager() {
             JSON.stringify``
         },
 
-        getState(req, res) {
+        async getState(req, res) {
             //TODO: Add security checks
-            if (!req.params.name) {
-                return res.send("No Data Found");
-            }
-            database.find(databasename, {areaname: req.params.name}).then(result => {
-                if (result.length == 0) {
+            try {
+                if (!req.params.name) {
                     return res.send("No Data Found");
                 }
-                res.send(result);
-            }).catch(err => res.send(err));
+                let result = await database.find("hardware", `name = '${req.params.name}'`);
+                if (result.length == 0) {
+                    res.send("No Data Found");
+                } else {
+                    res.send(JSON.stringify(result[0].state));
+                }
+            }
+            catch(error) {
+                Debug(error);
+                res.send(error);
+            }
         },
         getBase(req, res) {
             if (!req.params.name) {
@@ -193,14 +200,30 @@ function hardwaremanager() {
 
         },
 
-        getAllHardware(req, res) {
+        async getAllHardware(req, res) {
             //TODO: Implementeer security checks
-            database.find(databasename, {}).then(result => {
-                res.send(JSON.stringify({area: result}));
-            }).catch(err => res.send(err));
+            try {
+                let result = await database.find('hardware');
+                res.send(JSON.stringify(result));
+            }
+            catch(error) {
+                Debug(error);
+                res.send(error);
+            }
+        },
+
+        async getAreas(req, res) {
+            //TODO: Implementeer security checks
+            try {
+                let result = await database.find('area');
+                res.send(JSON.stringify(result));
+            }
+            catch(error) {
+                Debug(error);
+                res.send(error);
+            }
         }
     };
 }
-
 
 module.exports = hardwaremanager();
