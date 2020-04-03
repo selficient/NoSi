@@ -6,7 +6,7 @@ const express = require('express');
 const app = express();
 const router = require("./router.js");
 const graphrouter = require("./graphrouter.js");
-const port = 3000;
+const port = 3001;
 var helmet = require('helmet')
 
 app.use(helmet());

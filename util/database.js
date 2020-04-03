@@ -32,7 +32,7 @@ class database {
                 for (let element in values) {
                     if(first) {
                         insQuery1 += element;
-                        insQuery2 += values[element];
+                        insQuery2 += `${values[element]}`;
                         first = false;
                     } else {
                         insQuery1 += ',' + element;
@@ -42,6 +42,7 @@ class database {
                 insQuery1 += ')';
                 insQuery2 += ');';
                 let insQuery = insQuery1 + insQuery2;
+                console.log(insQuery);
                 let results = await query(insQuery);
                 result = results.insertId;
             }
